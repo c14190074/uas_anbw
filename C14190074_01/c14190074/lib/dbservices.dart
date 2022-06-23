@@ -5,8 +5,12 @@ CollectionReference tblData =
     FirebaseFirestore.instance.collection("tabelData");
 
 class Database {
-  static Stream<QuerySnapshot> getData() {
-    return tblData.snapshots();
+  static Stream<QuerySnapshot> getData(String keyword) {
+    if (keyword == "") {
+      return tblData.snapshots();
+    } else {
+      return tblData.where("title", isEqualTo: keyword).snapshots();
+    }
   }
 
   // static Future<List> getGroupedData() async {

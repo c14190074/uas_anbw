@@ -33,32 +33,55 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Services serviceAPI = Services();
   late Future<List<cData>> listData;
-  final globalKey = GlobalKey<ScaffoldState>();
+  // final globalKey = GlobalKey<ScaffoldState>();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  void showInSnackBar(String value) {
+    _scaffoldKey.currentState!
+        .showSnackBar(new SnackBar(content: new Text(value)));
+  }
+
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    // super.initState();
     listData = serviceAPI.getAllData();
+
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+          key: _scaffoldKey,
           appBar: AppBar(
-            title: Text("UAS"),
+            title: Text("Daftar Berita"),
           ),
           body: Column(
             children: [
-              Container(
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Likepost();
-                      }));
-                    },
-                    child: Text('View Liked Post')),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      margin: EdgeInsets.only(bottom: 5),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom:
+                                  BorderSide(color: Colors.grey, width: 1))),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return Likepost();
+                            }));
+                          },
+                          child: Text('View Liked Post')),
+                    ),
+                  ),
+                ],
               ),
               Expanded(
                   child: Container(
@@ -72,43 +95,85 @@ class _MyAppState extends State<MyApp> {
                         itemBuilder: (context, index) {
                           return ListTile(
                             title: Expanded(
-                              child: Wrap(
-                                children: [
-                                  Container(child: Text(isiData[index].ctitle)),
-                                  Container(
-                                    margin: EdgeInsets.only(right: 10),
-                                    child: ElevatedButton(
-                                        onPressed: () {
-                                          berita newdata = berita(
-                                            title: isiData[index].ctitle,
-                                            link: isiData[index].clink,
-                                            pubdate: isiData[index].cpubdate,
-                                            description:
-                                                isiData[index].cdescription,
-                                            thumbnail:
-                                                isiData[index].cthumbnail,
-                                          );
+                              child: Container(
+                                padding: EdgeInsets.only(bottom: 5),
+                                margin: EdgeInsets.only(bottom: 5),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            width: 1, color: Colors.grey))),
+                                child: Wrap(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Container(
+                                            child: Text(isiData[index].ctitle)),
+                                        Container(
+                                            margin: EdgeInsets.only(
+                                                bottom: 5, top: 5),
+                                            alignment: Alignment.bottomLeft,
+                                            child: Text(
+                                              isiData[index].cpubdate,
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.grey),
+                                            )),
+                                        Container(
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                margin:
+                                                    EdgeInsets.only(right: 10),
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      berita newdata = berita(
+                                                        title: isiData[index]
+                                                            .ctitle,
+                                                        link: isiData[index]
+                                                            .clink,
+                                                        pubdate: isiData[index]
+                                                            .cpubdate,
+                                                        description:
+                                                            isiData[index]
+                                                                .cdescription,
+                                                        thumbnail:
+                                                            isiData[index]
+                                                                .cthumbnail,
+                                                      );
 
-                                          Database.tambahData(brt: newdata);
-                                        },
-                                        child: Text("Like")),
-                                  ),
-                                  Container(
-                                    child: ElevatedButton(
-                                        onPressed: () {
-                                          Database.hapusdata(
-                                              selectedTtitle:
-                                                  isiData[index].ctitle);
-                                        },
-                                        child: Text("Dislike")),
-                                  )
-                                ],
+                                                      Database.tambahData(
+                                                          brt: newdata);
+                                                      showInSnackBar("Liked");
+                                                    },
+                                                    child: Icon(
+                                                        Icons.thumb_up_sharp)),
+                                              ),
+                                              Container(
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      Database.hapusdata(
+                                                          selectedTtitle:
+                                                              isiData[index]
+                                                                  .ctitle);
+                                                      showInSnackBar(
+                                                          "Disliked");
+                                                    },
+                                                    child: Icon(Icons
+                                                        .thumb_down_alt_sharp)),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             leading: CircleAvatar(
                                 backgroundImage:
                                     NetworkImage(isiData[index].cthumbnail)),
-                            subtitle: Text(isiData[index].cpubdate),
+                            // subtitle: Text(isiData[index].cpubdate),
                             onTap: () {
                               // showData(isiData[index].cid);
                               // Future<cData> response =

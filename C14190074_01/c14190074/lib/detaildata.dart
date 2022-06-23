@@ -30,29 +30,31 @@ class _DetailDataState extends State<Detaildata> {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: Text('Detail Data'),
+            title: Text('Halaman Detail'),
           ),
           body: ListView(
             children: [
               Container(
                 padding: EdgeInsets.all(20),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
                         margin: EdgeInsets.only(bottom: 10),
                         child: Image(image: NetworkImage(widget.thumbnail))),
                     Container(
                         margin: EdgeInsets.only(bottom: 10),
-                        child: Text('Title: ' + widget.title)),
+                        child: Text(widget.title,
+                            style: TextStyle(fontWeight: FontWeight.bold))),
                     Container(
                         margin: EdgeInsets.only(bottom: 10),
-                        child: Text('Description: ' + widget.description)),
-                    Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Text('Date: ' + widget.pubdate)),
+                        child: Text(widget.description)),
                     Container(
                         margin: EdgeInsets.only(bottom: 10),
                         child: Text('Link: ' + widget.link)),
+                    Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Text('Published Date: ' + widget.pubdate)),
                     Container(
                       //height: 20,
                       margin: EdgeInsets.fromLTRB(10, 10, 10, 30),

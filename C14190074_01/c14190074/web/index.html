@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <script>
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDnVGn9Kiv-vNn_S7XIUhvUIYayV_M3Ok0",
+    authDomain: "uas-ambw.firebaseapp.com",
+    projectId: "uas-ambw",
+    storageBucket: "uas-ambw.appspot.com",
+    messagingSenderId: "685551586943",
+    appId: "1:685551586943:web:2c8c2c5c61fec00652b94a",
+    measurementId: "G-MF86YZD2TY"
+  };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  
   <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.

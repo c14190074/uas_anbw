@@ -1,11 +1,21 @@
+import 'package:c14190074/dbclass.dart';
+import 'package:c14190074/dbservices.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'apiservices.dart';
 import 'dataclass.dart';
 import 'detaildata.dart';
+import 'firebase_options.dart';
+import 'likepost.dart';
 
-void main() {
+void main() async {
   // runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MaterialApp(
     title: 'Berita',
     debugShowCheckedModeBanner: false,
@@ -40,6 +50,16 @@ class _MyAppState extends State<MyApp> {
           ),
           body: Column(
             children: [
+              Container(
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Likepost();
+                      }));
+                    },
+                    child: Text('View Liked Post')),
+              ),
               Expanded(
                   child: Container(
                 child: FutureBuilder<List<cData>>(
@@ -51,7 +71,40 @@ class _MyAppState extends State<MyApp> {
                         itemCount: isiData.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            title: Text(isiData[index].ctitle),
+                            title: Expanded(
+                              child: Wrap(
+                                children: [
+                                  Container(child: Text(isiData[index].ctitle)),
+                                  Container(
+                                    margin: EdgeInsets.only(right: 10),
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          berita newdata = berita(
+                                            title: isiData[index].ctitle,
+                                            link: isiData[index].clink,
+                                            pubdate: isiData[index].cpubdate,
+                                            description:
+                                                isiData[index].cdescription,
+                                            thumbnail:
+                                                isiData[index].cthumbnail,
+                                          );
+
+                                          Database.tambahData(brt: newdata);
+                                        },
+                                        child: Text("Like")),
+                                  ),
+                                  Container(
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          Database.hapusdata(
+                                              selectedTtitle:
+                                                  isiData[index].ctitle);
+                                        },
+                                        child: Text("Dislike")),
+                                  )
+                                ],
+                              ),
+                            ),
                             leading: CircleAvatar(
                                 backgroundImage:
                                     NetworkImage(isiData[index].cthumbnail)),

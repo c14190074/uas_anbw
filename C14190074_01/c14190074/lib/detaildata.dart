@@ -29,71 +29,54 @@ class _DetailDataState extends State<Detaildata> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Detail Data'),
-        ),
-        body: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
+          appBar: AppBar(
+            title: Text('Detail Data'),
+          ),
+          body: ListView(
             children: [
               Container(
-                //height: 20,
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                child: Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
+                padding: EdgeInsets.all(20),
+                child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Image(image: NetworkImage(widget.thumbnail)),
-                      ],
+                    Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Image(image: NetworkImage(widget.thumbnail))),
+                    Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Text('Title: ' + widget.title)),
+                    Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Text('Description: ' + widget.description)),
+                    Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Text('Date: ' + widget.pubdate)),
+                    Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Text('Link: ' + widget.link)),
+                    Container(
+                      //height: 20,
+                      margin: EdgeInsets.fromLTRB(10, 10, 10, 30),
+                      child: Wrap(
+                        direction: Axis.horizontal,
+                        spacing: 4,
+                        runSpacing: 5,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return MyApp();
+                                }));
+                              },
+                              child: Text('Back to List')),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Text('Title: ' + widget.title),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Description: ' + widget.description),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Date: ' + widget.pubdate),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Link: ' + widget.link),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                //height: 20,
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 30),
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  spacing: 4,
-                  runSpacing: 5,
-                  children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return MyApp();
-                          }));
-                        },
-                        child: Text('Back to List')),
                   ],
                 ),
               ),
             ],
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

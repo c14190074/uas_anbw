@@ -5,11 +5,12 @@ import 'dataclass.dart';
 class Services {
   Future<List<cData>> getAllData() async {
     final response = await http.get(
-      Uri.parse('https://api-berita-indonesia.vercel.app/cnbc/terbaru/'),
+      Uri.parse(
+          'https://raw.githubusercontent.com/c14190074/uas_anbw/main/data'),
     );
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((data) => cData.fromJson(data['posts'])).toList();
+      return jsonResponse.map((data) => cData.fromJson(data)).toList();
     } else {
       throw Exception('Failed to load Data');
     }

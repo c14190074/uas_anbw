@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'apiservices.dart';
 import 'dataclass.dart';
+import 'detaildata.dart';
 
 void main() {
   // runApp(const MyApp());
@@ -59,16 +60,15 @@ class _MyAppState extends State<MyApp> {
                               // showData(isiData[index].cid);
                               // Future<cData> response =
                               //     serviceAPI.getSingleData(isiData[index].cid);
-                              // Navigator.push(context,
-                              //     MaterialPageRoute(builder: (context) {
-                              //   return Detaildata(
-                              //       nama: isiData[index].cnama,
-                              //       avatar: isiData[index].cavatar,
-                              //       alamat: isiData[index].calamat,
-                              //       email: isiData[index].cemail,
-                              //       pekerjaan: isiData[index].cpekerjaan,
-                              //       quote: isiData[index].cquote);
-                              // }));
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return Detaildata(
+                                    title: isiData[index].ctitle,
+                                    description: isiData[index].cdescription,
+                                    link: isiData[index].clink,
+                                    pubdate: isiData[index].cpubdate,
+                                    thumbnail: isiData[index].cthumbnail);
+                              }));
                             },
                             onLongPress: () {
                               // deleteData(isiData[index].cid, context);

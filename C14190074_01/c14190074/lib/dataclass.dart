@@ -16,7 +16,7 @@ class cData {
     return cData(
         clink: json['link'],
         ctitle: json['title'],
-        cpubdate: json['pubdate'],
+        cpubdate: json['pubDate'],
         cdescription: json['description'],
         cthumbnail: json['thumbnail']);
   }
